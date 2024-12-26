@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, UploadFile, Form
+from fastapi import FastAPI, HTTPException, UploadFile, Form, File
 from fastapi.middleware.cors import CORSMiddleware
 from prisma import Prisma
 from prisma.errors import PrismaError
@@ -201,6 +201,7 @@ async def register_employee(
     name: str = Form(...),
     age: int = Form(...),
     gender: str = Form(...),
+    # photo: UploadFile = File(...),
     photo: UploadFile = None,
     designation: str = Form(...),
     contactNumber: str = Form(...),
@@ -229,6 +230,7 @@ async def register_visitor(
     name: str = Form(...),
     age: int = Form(...),
     gender: str = Form(...),
+    # photo: UploadFile = File(...),
     photo: UploadFile = None,
     contact: str = Form(...),
     purposeOfVisit: str = Form(...),
