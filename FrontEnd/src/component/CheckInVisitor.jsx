@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import Webcam from 'react-webcam';
 import VisionEdge from "../utils/VisionEdge";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const CheckInVisitor = () => {
   const webcamRef = useRef(null); // Ref for the webcam
@@ -13,6 +14,18 @@ const CheckInVisitor = () => {
       setCapturedImage(imageSrc); // Store the captured image
     }
   };
+  //backend intergrations
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+
+
+    try {
+      const photoBlob = await fetch(capturedPhoto).then((res) => res.blob());
+      
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <div>
