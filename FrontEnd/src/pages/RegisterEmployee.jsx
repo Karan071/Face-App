@@ -713,6 +713,7 @@
 
 // export default RegisterVisitor;
 
+// ------------------------------------------------------
 
 import React, { useState, useRef } from "react";
 import Webcam from "react-webcam";
@@ -763,9 +764,59 @@ const RegisterEmployee = () => {
     return newErrors;
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("button is triggered")
+  //   const validationErrors = validateForm();
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     return;
+  //   }
+
+  //   if (!capturedPhoto) {
+  //     alert("Please capture a photo before submitting.");
+  //     return;
+  //   }
+
+  //   // Convert Base64 photo back to Blob
+  //   const byteString = atob(capturedPhoto.split(",")[1]);
+  //   const arrayBuffer = new Uint8Array(byteString.length);
+  //   for (let i = 0; i < byteString.length; i++) {
+  //     arrayBuffer[i] = byteString.charCodeAt(i);
+  //   }
+  //   const photoBlob = new Blob([arrayBuffer], { type: "image/jpeg" });
+
+  //   // Prepare form data
+  //   const formDataObj = new FormData();
+  //   formDataObj.append("name", formData.name);
+  //   formDataObj.append("age", formData.age);
+  //   formDataObj.append("gender", formData.gender);
+  //   formDataObj.append("photo", photoBlob, "photo.jpg");
+  //   formDataObj.append("designation", formData.designation);
+  //   formDataObj.append("contactNumber", formData.contactNo);
+  //   formDataObj.append("department", formData.department);
+  //   formDataObj.append("description", formData.description);
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:8000/register-employee/",
+  //       formDataObj,
+  //       {
+  //         headers: { "Content-Type": "multipart/form-data" },
+  //       }
+  //     );
+  //     alert("Employee registered successfully.");
+  //   } catch (error) {
+  //     console.error("Error during form submission:", error);
+  //     alert("Error during submission. Please try again.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("button is triggered")
+    console.log("Form submitted");
+  
+    // Validate the form
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -776,40 +827,41 @@ const RegisterEmployee = () => {
       alert("Please capture a photo before submitting.");
       return;
     }
-
+  
     // Convert Base64 photo back to Blob
-    const byteString = atob(capturedPhoto.split(",")[1]);
+    const byteString = atob(capturedPhoto.split(",")[1]); // Decode Base64
     const arrayBuffer = new Uint8Array(byteString.length);
     for (let i = 0; i < byteString.length; i++) {
       arrayBuffer[i] = byteString.charCodeAt(i);
     }
     const photoBlob = new Blob([arrayBuffer], { type: "image/jpeg" });
-
+  
     // Prepare form data
     const formDataObj = new FormData();
+    formDataObj.append("employeeId", formData.employeeId);
     formDataObj.append("name", formData.name);
     formDataObj.append("age", formData.age);
     formDataObj.append("gender", formData.gender);
-    formDataObj.append("photo", photoBlob, "photo.jpg");
+    formDataObj.append("contactNo", formData.contactNo);
     formDataObj.append("designation", formData.designation);
-    formDataObj.append("contactNumber", formData.contactNo);
     formDataObj.append("department", formData.department);
     formDataObj.append("description", formData.description);
-
+    formDataObj.append("photo", photoBlob, "photo.jpg"); 
+  
     try {
-      const response = await axios.post(
-        "http://localhost:8000/register-employee/",
+      const response = await axios.post(`${process.env.BACKEND_URL}/register-employee/`,
         formDataObj,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      alert("Employee registered successfully.");
+      alert("Employee registered successfully!");
     } catch (error) {
       console.error("Error during form submission:", error);
       alert("Error during submission. Please try again.");
     }
   };
+  
 
   return (
     <>
@@ -1000,3 +1052,7 @@ const RegisterEmployee = () => {
 };
 
 export default RegisterEmployee;
+
+
+
+

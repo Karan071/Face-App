@@ -32,9 +32,6 @@ origins = [
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:5174"
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -201,8 +198,8 @@ async def register_employee(
     name: str = Form(...),
     age: int = Form(...),
     gender: str = Form(...),
-    # photo: UploadFile = File(...),
-    photo: UploadFile = None,
+    photo: UploadFile = Form(...),
+    # photo: UploadFile = None,
     designation: str = Form(...),
     contactNumber: str = Form(...),
     department: str = Form(...),
@@ -237,7 +234,7 @@ async def register_visitor(
     description: str = Form(...)
 ):
     try:
-        photo_bytes = await photo.read()  # This reads the file into bytes
+        photo_bytes = await photo.read()  
         photo_base64 = base64.b64encode(photo_bytes).decode("utf-8")  # Convert photo to base64
         embedding = extract_face_embedding(photo_bytes)  # Extract the face embedding
         
@@ -247,7 +244,7 @@ async def register_visitor(
             "description": description
         }
         await save_to_prisma(name, age, gender, photo_base64, "visitor", additional_data)
-        save_to_milvus(VISITOR_COLLECTION, name, embedding)  # Save to Milvus
+        save_to_milvus(VISITOR_COLLECTION, name, embedding)
         return {"message": "Visitor registered successfully."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during registration: {str(e)}")
