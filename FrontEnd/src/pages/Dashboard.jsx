@@ -29,7 +29,6 @@ const Dashboard = () => {
         </label>
       </div>
 
-      {/* Dynamic Content */}
       <div className="flex justify-center items-center">
         {isVisitor ? <CheckInVisitor /> : <CheckInPage />}
       </div>
