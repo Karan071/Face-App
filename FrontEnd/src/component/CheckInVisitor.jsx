@@ -12,44 +12,7 @@ const CheckInVisitor = () => {
     const imageSrc = webcamRef.current.getScreenshot(); // Capture the photo
     setCapturedImage(imageSrc); // Store the captured image
   };
-  // // Backend integration
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!capturedImage) {
-  //     alert("Please capture the photo for recognition");
-  //     return;
-  //   }
-
-  //   try {
-  //     // Convert the base64 image to a Blob
-  //     const photoBlob = await fetch(capturedImage).then((res) => res.blob());
-  //     const formData = new FormData();
-  //     formData.append("photo", photoBlob, "photo.jpg");
-
-  //     // Send the photo to the backend
-  //     const response = await axios.post(
-  //       "http://localhost:8000/recognize-visitor/",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-
-  //     // Handle the response
-  //     if (response.data.success) {
-  //       alert("Visitor recognized successfully!");
-  //     } else {
-  //       alert("Recognition failed. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during submission:", error);
-  //     alert("An error occurred. Please try again.");
-  //   }
-  // };
-
+  
 
     //backend integrations
   const handleSubmit = async (e) => {

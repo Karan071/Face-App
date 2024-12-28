@@ -28,7 +28,7 @@ const CheckInPage = () => {
       const formData = new FormData()
       formData.append("photo", photoBlob, 'photo.jpg');
 
-
+      // Handle response
       const response = await axios.post("http://localhost:8000/recognize-employee/",formData, {
         headers : {
           "Content-Type" : "multipart/form-data",
@@ -52,9 +52,6 @@ const CheckInPage = () => {
       )
     }
   };
-
-
-
 
   return (
     <div>

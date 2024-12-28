@@ -2,6 +2,7 @@ import React from 'react';
 import HoverButton from '../utils/Button';
 import VisionEdge from '../utils/VisionEdge';
 import asset from '../assets/Robot.png';
+import {Link} from "react-router-dom"
 
 const MainPage = () => {
     return (
@@ -17,6 +18,7 @@ const MainPage = () => {
 
             <div className="flex flex-col md:flex-row justify-center items-center md:items-between md:space-x-16 space-y-8 md:space-y-0 p-6">
                 <div className="flex flex-col items-center space-y-11">
+                    <Link to="/dashboard">
                     <HoverButton
                         text="Check-In"
                         buttonColor="bg-green-200"
@@ -25,6 +27,8 @@ const MainPage = () => {
                         width="w-80"
                         height="h-20"
                     />
+                    </Link>
+                    <Link to="/dashboard">
                     <HoverButton
                         text="Check-Out"
                         buttonColor="bg-red-200"
@@ -33,6 +37,7 @@ const MainPage = () => {
                         width="w-80"
                         height="h-20"
                     />
+                    </Link>
                 </div>
 
                 {/* Right Section (Image) */}
