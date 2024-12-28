@@ -9,6 +9,7 @@ import { Routes, Route} from "react-router-dom"
 import RegisterEmployee from "./pages/RegisterEmployee";
 import RegisterVisitor from "./pages/RegisterVisitor";
 import MainPage from "./pages/MainPage";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -17,16 +18,14 @@ function App() {
         <Route path="/" element= {<LandingPage />}/>  
         <Route path="/main-page" element = {<MainPage/>} />
         <Route path="/dashboard" element = {<Dashboard/>}/>
-
         <Route path="/check-visitor" element = {<CheckInVisitor/>} />
         <Route path="/check-employee" element = {<CheckInPage/>} /> 
-      
         <Route path="/register-employee" element = {<RegisterEmployee/>} />
         <Route path="/register-visitor" element = {<RegisterVisitor/>} />
         <Route path="/success" element = {<SuccessPage/>} />
         <Route path="/error" element = {<ErrorPage/>} />
+        <Route path="*" element = {<PageNotFound/>} />
       </Routes>     
-      {/* <SuccessPage/> */}
     </>
   );
 }
