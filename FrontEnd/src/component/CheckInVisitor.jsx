@@ -91,8 +91,8 @@ const CheckInVisitor = () => {
 
           <div className="mt-6 text-center">
             <Link to="/register-visitor">
-              <p className="text-lg font-medium">
-                New Visitor here? Tap below to check yourself in!
+              <p className="text-sm sm:text-lg text-indigo-700">
+                New Visitor here? Tap here!
               </p>
             </Link>
           </div>

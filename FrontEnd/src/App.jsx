@@ -1,4 +1,3 @@
-import CheckIn from "./component/SuccessPage";
 import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/LandingPage";
 import SuccessPage from "../src/component/SuccessPage";
@@ -10,6 +9,7 @@ import RegisterEmployee from "./pages/RegisterEmployee";
 import RegisterVisitor from "./pages/RegisterVisitor";
 import MainPage from "./pages/MainPage";
 import PageNotFound from "./pages/PageNotFound";
+import InternalServer from "./pages/InternalServer";
 
 function App() {
   return (
@@ -24,7 +24,10 @@ function App() {
         <Route path="/register-visitor" element = {<RegisterVisitor/>} />
         <Route path="/success" element = {<SuccessPage/>} />
         <Route path="/error" element = {<ErrorPage/>} />
+
+        {/* Page not found && Internal Server error */}
         <Route path="*" element = {<PageNotFound/>} />
+        <Route path="/500" element = {<InternalServer/>} />
       </Routes>     
     </>
   );

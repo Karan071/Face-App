@@ -2,7 +2,8 @@ import React from 'react';
 import HoverButton from '../utils/Button';
 import VisionEdge from '../utils/VisionEdge';
 import asset from '../assets/Robot.png';
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import asset1 from '../assets/ai-bg.png';
 
 const MainPage = () => {
     return (
@@ -43,7 +44,7 @@ const MainPage = () => {
                 {/* Right Section (Image) */}
                 <div className="flex justify-center items-center">
                     <img
-                        src={asset}
+                        src={asset1}
                         alt="MainPage"
                         className="max-w-full h-auto md:w-[500px] rounded-sm shadow-sm"
                     />

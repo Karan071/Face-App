@@ -85,8 +85,8 @@ const CheckInPage = () => {
 
           <div className="mt-6 text-center">
             <Link to="/register-employee">
-              <p className="text-sm sm:text-lg font-medium">
-                New Employee here? Tap below to check yourself in!
+              <p className="text-sm sm:text-lg text-indigo-700">
+                New Employee here? Click here!
               </p>
             </Link>
           </div>
