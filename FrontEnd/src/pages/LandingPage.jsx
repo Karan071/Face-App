@@ -31,10 +31,10 @@ const LandingPage = () => {
           <p className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-400 inline-block text-transparent bg-clip-text">
             VisionEdge
           </p>
-          <p className="font-thin text-gray-700 text-xl md:text-4xl mt-4">
+          <p className="font-thin text-gray-700 text-xl md:text-3xl mt-4">
             Redefining Recognition, One Face at a Time
           </p>
-          <p className="text-gray-600 text-lg md:text-2xl mt-4 mb-6">
+          <p className="text-gray-600 text-lg md:text-xl mt-4 mb-6">
             Your All-in-One Solution for Every Need.
           </p>
           <Link to="/main-page">

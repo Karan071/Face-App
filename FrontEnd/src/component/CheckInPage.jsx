@@ -69,8 +69,8 @@ const CheckInPage = () => {
               audio={false}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              height={600}
-              width={1000}
+              height={400}
+              width={750}
               className="rounded-lg shadow-md"
             />
           ) : (
@@ -78,8 +78,8 @@ const CheckInPage = () => {
               src={capturedImage}
               alt="Captured image"
               className="rounded-lg shadow-md"
-              height={600}
-              width={1000}
+              height={400}
+              width={750}
             />
           )}
 
