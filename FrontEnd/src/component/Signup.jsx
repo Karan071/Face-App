@@ -106,17 +106,17 @@ const LoginPage = () => {
     return (
         <div
             className="h-screen w-screen bg-cover bg-center flex flex-col md:flex-row"
-            style={{ backgroundImage: `url(${bg})` }}
+            style={{ backgroundImage: `url(${bg})`}}
         >
+            
             {/* Form Container */}
-            <div className="h-full w-full md:w-1/2 flex items-center justify-center md:justify-start">
-                <form className="max-w-lg w-full p-6 sm:p-8 bg-white rounded-md shadow-lg md:ml-12 mx-4">
-                    {/* Logo */}
-                    <VisionEdge className="flex justify-center items-center mb-6" />
+            <div className="h-full w-full md:w-1/3 flex items-center justify-center md:justify-start bg-white rounded-sm">
+                <form className="max-w-lg w-full p-6 sm:p-8 bg-white rounded-md md:ml-12 mx-4">
+                    
                     
                     {/* Title */}
                     <div className="mb-6">
-                        <h3 className="text-xl font-normal text-center md:text-left mt-4">
+                        <h3 className="text-4xl font-normal text-center md:text-left mt-4">
                             Admin Access Portal
                         </h3>
                     </div>
