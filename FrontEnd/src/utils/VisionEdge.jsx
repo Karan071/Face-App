@@ -4,7 +4,7 @@
 
     const Navbar = ({ buttonText, onButtonClick }) => {
     return (
-        <div className="flex justify items-center px-8 py-4 bg-white shadow-sm">
+        <div className="flex justify items-center px-8 py-4 bg-white">
         {/* Logo and Title */}
             <Link to = "/">  
             <div className="flex items-center">

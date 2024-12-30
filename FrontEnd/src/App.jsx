@@ -10,17 +10,16 @@ import RegisterVisitor from "./pages/RegisterVisitor";
 import MainPage from "./pages/MainPage";
 import PageNotFound from "./pages/PageNotFound";
 import InternalServer from "./pages/InternalServer";
-import Login from "./pages/Login";
 
-// test
-import Example from "./component/Example";
+
+import Signup from "./component/Signup";
 
 function App() {
   return (
     <>
         <Routes>
         <Route path="/" element= {<LandingPage />}/>  
-        <Route path="/signup" element = {<Login/>} />
+        <Route path="/signup" element = {<Signup/>} />
         <Route path="/main-page" element = {<MainPage/>} />
         <Route path="/dashboard" element = {<Dashboard/>}/>
         <Route path="/check-visitor" element = {<CheckInVisitor/>} />
@@ -29,12 +28,11 @@ function App() {
         <Route path="/register-visitor" element = {<RegisterVisitor/>} />
         <Route path="/success" element = {<SuccessPage/>} />
         <Route path="/error" element = {<ErrorPage/>} />
+
         {/* Page not found && Internal Server error */}
         <Route path="*" element = {<PageNotFound/>} />
         <Route path="/500" element = {<InternalServer/>} />
 
-        {/* test pages */}
-        <Route path="/test-page" element = {<Example/>} />
       </Routes>     
     </>
   );
