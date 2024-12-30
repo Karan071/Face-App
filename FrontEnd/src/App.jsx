@@ -12,6 +12,9 @@ import PageNotFound from "./pages/PageNotFound";
 import InternalServer from "./pages/InternalServer";
 import Login from "./pages/Login";
 
+// test
+import Example from "./component/Example";
+
 function App() {
   return (
     <>
@@ -29,6 +32,9 @@ function App() {
         {/* Page not found && Internal Server error */}
         <Route path="*" element = {<PageNotFound/>} />
         <Route path="/500" element = {<InternalServer/>} />
+
+        {/* test pages */}
+        <Route path="/test-page" element = {<Example/>} />
       </Routes>     
     </>
   );

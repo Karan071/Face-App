@@ -89,7 +89,18 @@ const CheckInPage = () => {
                 New Employee here? Click here!
               </p>
             </Link>
-          </div>
+          </div>Admin Access
+          Immerse yourself in a hassle-free login journey with our intuitively designed login form. Effortlessly access your account.
+          
+          Email Address
+          Enter your email
+          Password
+          Enter your password
+          
+          Remember me
+          Forgot your password?
+          Log in
+          Don't have an account? Register here
 
           {/* Capture Button */}
           {!capturedImage ? ( <button
@@ -103,7 +114,7 @@ const CheckInPage = () => {
             <button
               type="sumit"
               onClick={handleSubmit}
-              className="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-6 py-3 transition-all duration-200 ease-in-out"
+              className="mt-3 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-6 py-3 transition-all duration-200 ease-in-out"
             >
               Submit
             </button>
