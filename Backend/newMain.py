@@ -21,7 +21,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 app = FastAPI(
     title="Face Recognition",
     description="Backend for Face Recognition App with Prisma and Milvus",
-    version="0.5"
+    version="1.0"
 )
 
 @app.get("/")
@@ -249,27 +249,67 @@ async def register_visitor(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during registration: {str(e)}")
 
+# @app.post("/recognize-employee/")
+# async def recognize_employee(photo: UploadFile):
+#     try:
+#         photo_bytes = await photo.read() 
+#         query_embedding = extract_face_embedding(photo_bytes)
+#         result = search_in_milvus(EMPLOYEE_COLLECTION, query_embedding)
+#         if result["match_found"]:
+#             return {"name": result["name"], "similarity": result["similarity"]}
+#         return {"message": result["message"]}
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Error in recognition: {str(e)}")
+
 @app.post("/recognize-employee/")
 async def recognize_employee(photo: UploadFile):
     try:
-        photo_bytes = await photo.read() 
+        # Read the uploaded photo bytes
+        photo_bytes = await photo.read()
+        # Extract the face embedding
         query_embedding = extract_face_embedding(photo_bytes)
+        # Perform the search in the Milvus collection
         result = search_in_milvus(EMPLOYEE_COLLECTION, query_embedding)
+        # Determine the status based on similarity
         if result["match_found"]:
-            return {"name": result["name"], "similarity": result["similarity"]}
-        return {"message": result["message"]}
+            similarity = result["similarity"]
+            status = "success" if similarity >= 0.4 else "failed"
+            return {
+                "name": result["name"],
+                "similarity": similarity,
+                "status": status,
+            }
+        # No match found
+        return {
+            "message": result["message"],
+            "status": "failed",
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error in recognition: {str(e)}")
-
+    
+    
 @app.post("/recognize-visitor/")
 async def recognize_visitor(photo: UploadFile):
     try:
         photo_bytes = await photo.read() 
         query_embedding = extract_face_embedding(photo_bytes)
         result = search_in_milvus(VISITOR_COLLECTION, query_embedding)
+        # if result["match_found"]:
+        #     return {"name": result["name"], "similarity": result["similarity"]}
+        # return {"message": result["message"]}
         if result["match_found"]:
-            return {"name": result["name"], "similarity": result["similarity"]}
-        return {"message": result["message"]}
+            similarity = result["similarity"]
+            status = "success" if similarity >= 0.4 else "failed"
+            return {
+                "name" : result["name"],
+                "similarity": similarity,
+                "status": status,
+            }
+            
+            return {
+                "message": result["message"],
+                "status" : "failed",
+            }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error in recognition: {str(e)}")
 
