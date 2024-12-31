@@ -14,7 +14,7 @@ const LandingPage = () => {
             VisionEdge
           </p>
         </div>
-        <Link to= "/signup">
+        <Link to= "/login">
         <button
           type="button"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-3 md:px-6 md:py-3.5 mt-2 md:mt-0"
@@ -37,7 +37,7 @@ const LandingPage = () => {
           <p className="text-gray-600 text-lg md:text-xl mt-4 mb-6">
             Your All-in-One Solution for Every Need.
           </p>
-          <Link to="/signup">
+          <Link to="/login">
           <button
             type="button"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-lg md:text-xl px-6 py-3 md:px-8 md:py-4"

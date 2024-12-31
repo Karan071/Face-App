@@ -45,7 +45,7 @@ model User {
   id           Int      @id @default(autoincrement())
   username     String   @unique
   email        String   @unique
-  fullName     String   @map("full_name")
+  fullName     String   @map("fullName")
   hashedPassword String @map("hashed_password")
   role         String   @default("user")
   disabled     Boolean  @default(false)

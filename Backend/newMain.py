@@ -483,11 +483,11 @@ def preload_deepface_model():
 
 
 # orm helper
-async def save_user(username:str, full_name: str, email: str, hashed_password: str, role: str = "user"):
+async def save_user(username:str, fullName: str, email: str, hashed_password: str, role: str = "user"):
     return await db.user.create(
         data = {
             "username" : username,
-            "full_name" : fullname,
+            "fullName" : fullName,
             "email": email,
             "hashed_password" : hashed_password,
             "role" : role
@@ -608,21 +608,33 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     }
 
 
+# @app.post("/register/")
+# async def register_user(
+#     username : str = Form(...),
+#     password : str = Form(...),
+#     email : str = Form(...),
+#     fullname : str = Form(...),
+#     role : str = Form(...),
+# ) : 
+#     hashed_password = get_password_hash(password)
+#     user = await save_user(username, fullname, email, hashed_password, role)
+    
+#     return {
+#         "message" : "User registered successfully"
+#     }
+
 @app.post("/register/")
 async def register_user(
-    username : str = Form(...),
-    password : str = Form(...),
-    email : str = Form(...),
-    fullname : str = Form(...),
-    role : str = Form(...),
-) : 
+    username: str = Form(...),
+    password: str = Form(...),
+    email: str = Form(...),
+    fullName: str = Form(...),  # This is the field that might be missing
+    role: str = Form(...),
+):
     hashed_password = get_password_hash(password)
-    user = await save_user(username, fullname, email, hashed_password, role)
-    
-    return {
-        "message" : "User registered successfully"
-    }
-    
+    user = await save_user(username, fullName, email, hashed_password, role)
+    return {"message": "User registered successfully"}
+
 
 @app.get("/user/me")
 async def read_users_me(current_user: dict = Depends(get_current_active_user)):
@@ -667,7 +679,8 @@ async def register_visitor(
     photo: UploadFile = None,
     contact: str = Form(...),
     purposeOfVisit: str = Form(...),
-    description: str = Form(...)
+    description: str = Form(...),
+    current_user: dict = Depends(get_current_active_user)
 ):
     try:
         photo_bytes = await photo.read()  
@@ -687,7 +700,9 @@ async def register_visitor(
 
 
 @app.post("/recognize-employee/")
-async def recognize_employee(photo: UploadFile):
+async def recognize_employee(
+    photo: UploadFile
+    ):
     try:
         # Read the uploaded photo bytes
         photo_bytes = await photo.read()
@@ -714,7 +729,9 @@ async def recognize_employee(photo: UploadFile):
     
     
 @app.post("/recognize-visitor/")
-async def recognize_visitor(photo: UploadFile):
+async def recognize_visitor(
+    photo: UploadFile
+    ):
     try:
         photo_bytes = await photo.read() 
         query_embedding = extract_face_embedding(photo_bytes)
