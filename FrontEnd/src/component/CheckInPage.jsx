@@ -3,6 +3,7 @@ import Webcam from "react-webcam";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
 const CheckInPage = () => {
   const webcamRef = useRef(null); //video ref
   const [capturedImage, setCapturedImage] = useState(null); // capture state
@@ -89,18 +90,7 @@ const CheckInPage = () => {
                 New Employee here? Click here!
               </p>
             </Link>
-          </div>Admin Access
-          Immerse yourself in a hassle-free login journey with our intuitively designed login form. Effortlessly access your account.
-          
-          Email Address
-          Enter your email
-          Password
-          Enter your password
-          
-          Remember me
-          Forgot your password?
-          Log in
-          Don't have an account? Register here
+          </div>
 
           {/* Capture Button */}
           {!capturedImage ? ( <button
