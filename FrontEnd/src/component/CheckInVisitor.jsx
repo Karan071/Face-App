@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import Webcam from 'react-webcam';
-import VisionEdge from "../utils/VisionEdge";
 import { Link } from "react-router-dom";
 import axios from "axios";
 

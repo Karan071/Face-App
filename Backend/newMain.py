@@ -489,11 +489,10 @@ async def save_user(username:str, fullName: str, email: str, hashed_password: st
             "username" : username,
             "fullName" : fullName,
             "email": email,
-            "hashed_password" : hashed_password,
+            "hashedPassword" : hashed_password,
             "role" : role
         }
     )
-    
 
 async def authenticate_user(username : str , password : str):
     user = await db.user.find_first(
@@ -607,21 +606,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         "token_type" : "bearer"
     }
 
-
-# @app.post("/register/")
-# async def register_user(
-#     username : str = Form(...),
-#     password : str = Form(...),
-#     email : str = Form(...),
-#     fullname : str = Form(...),
-#     role : str = Form(...),
-# ) : 
-#     hashed_password = get_password_hash(password)
-#     user = await save_user(username, fullname, email, hashed_password, role)
-    
-#     return {
-#         "message" : "User registered successfully"
-#     }
 
 @app.post("/register/")
 async def register_user(
