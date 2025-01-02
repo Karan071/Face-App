@@ -338,7 +338,6 @@ from passlib.context import CryptContext
 from typing import Optional, List
 
 
-# Suppress TensorFlow warnings
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 app = FastAPI(
@@ -346,6 +345,8 @@ app = FastAPI(
     description="Backend for Face Recognition App with Prisma and Milvus",
     version="1.0"
 )
+
+db = Prisma()
 
 @app.get("/")
 async def root():
@@ -364,8 +365,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize Prisma client
-db = Prisma()
 
 # Constants for auth
 SECRET_KEY = "face_application_karan"
@@ -590,21 +589,31 @@ def search_in_milvus(collection_name, query_embedding, threshold=0.6):
         raise HTTPException(status_code=500, detail=f"Error during search: {str(e)}")
 
 
-# --- auth endpoint-----
+async def get_user_by_username(username: str):
+    try:
+        if not db.is_connected():
+            await db.connect()
+
+        user = await db.user.find_unique(where={"username": username})
+        return user
+    except Exception as e:
+        print(f"Error fetching user by username: {e}")
+        return None
+    finally:
+        if db.is_connected():
+            await db.disconnect()
+
+# --- Authentication Endpoints ---
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = await authenticate_user(form_data.username, form_data.password)
-    if not user:
+    user = await get_user_by_username(form_data.username)
+    if not user or not verify_password(form_data.password, user.hashedPassword):  
         raise HTTPException(
-            status_code=401,
-            detail="Incorrect username or password",
-            headers = {"WWW-Authenticate" : "Bearer"}
+            status_code=401, detail="Incorrect username or password", headers={"WWW-Authenticate": "Bearer"}
         )
-    access_token = create_access_token(data={"sub" : user.username})
-    return {
-        "access_token" : access_token,
-        "token_type" : "bearer"
-    }
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTE)
+    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
 @app.post("/register/")
@@ -612,17 +621,18 @@ async def register_user(
     username: str = Form(...),
     password: str = Form(...),
     email: str = Form(...),
-    fullName: str = Form(...),  # This is the field that might be missing
+    fullName: str = Form(...),  
     role: str = Form(...),
 ):
     hashed_password = get_password_hash(password)
-    user = await save_user(username, fullName, email, hashed_password, role)
+    await save_user(username, fullName, email, hashed_password, role)
     return {"message": "User registered successfully"}
 
 
 @app.get("/user/me")
 async def read_users_me(current_user: dict = Depends(get_current_active_user)):
     return current_user
+
 
 # --- API Endpoints ---
 @app.post("/register-employee/")
@@ -639,8 +649,8 @@ async def register_employee(
 ):
     try:
         photo_bytes = await photo.read()  
-        photo_base64 = base64.b64encode(photo_bytes).decode("utf-8")  # Convert photo to base64
-        embedding = extract_face_embedding(photo_bytes)  # Extract the face embedding
+        photo_base64 = base64.b64encode(photo_bytes).decode("utf-8")  
+        embedding = extract_face_embedding(photo_bytes)  
         
         additional_data = {
             "designation": designation,
@@ -659,7 +669,6 @@ async def register_visitor(
     name: str = Form(...),
     age: int = Form(...),
     gender: str = Form(...),
-    # photo: UploadFile = File(...),
     photo: UploadFile = None,
     contact: str = Form(...),
     purposeOfVisit: str = Form(...),
@@ -682,19 +691,15 @@ async def register_visitor(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during registration: {str(e)}")
 
-
 @app.post("/recognize-employee/")
 async def recognize_employee(
-    photo: UploadFile
+    photo: UploadFile,
+    current_user: dict = Depends(get_current_active_user) 
     ):
     try:
-        # Read the uploaded photo bytes
         photo_bytes = await photo.read()
-        # Extract the face embedding
         query_embedding = extract_face_embedding(photo_bytes)
-        # Perform the search in the Milvus collection
         result = search_in_milvus(EMPLOYEE_COLLECTION, query_embedding)
-        # Determine the status based on similarity
         if result["match_found"]:
             similarity = result["similarity"]
             status = "success" if similarity >= 0.4 else "failed"
@@ -703,18 +708,17 @@ async def recognize_employee(
                 "similarity": similarity,
                 "status": status,
             }
-        # No match found
         return {
             "message": result["message"],
             "status": "failed",
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error in recognition: {str(e)}")
-    
-    
+
 @app.post("/recognize-visitor/")
 async def recognize_visitor(
-    photo: UploadFile
+    photo: UploadFile,
+    current_user: dict = Depends(get_current_active_user)
     ):
     try:
         photo_bytes = await photo.read() 
