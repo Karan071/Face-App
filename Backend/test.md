@@ -1768,3 +1768,5 @@ if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
 
 
+
+https://medium.com/@chnarsimha986/fastapi-login-logout-changepassword-4c12e92d41e2

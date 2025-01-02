@@ -402,7 +402,7 @@ async def shutdown():
 MILVUS_HOST = os.getenv("MILVUS_HOST", "localhost")
 MILVUS_PORT = os.getenv("MILVUS_PORT", "19530")
 EMPLOYEE_COLLECTION = "employee_embeddings"
-VISITOR_COLLECTION = "visitor_embeddings"
+VISITOR_COLLECTION = "vidb.connect()sitor_embeddings"
 
 MODEL_NAME = "VGG-Face"
 
@@ -483,6 +483,8 @@ def preload_deepface_model():
 
 # orm helper
 async def save_user(username:str, fullName: str, email: str, hashed_password: str, role: str = "user"):
+    if not db.is_connected():
+        await db.connect()
     return await db.user.create(
         data = {
             "username" : username,
